@@ -1,0 +1,72 @@
+{
+  "skill_name": "retrospective",
+  "note": "User-invoked skill (disable-model-invocation: true). Prompts are prefixed /retrospective so the host expands the skill; bare natural language will not load it. The eval conversation itself is the session under review — no synthetic transcript for the normal cases. Refusal case plants a canary log that must not be read or echoed. runs: 3 on the discipline cases (refusal, anti-fabrication) because compliance is the thing under test.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "default-shape-and-account",
+      "prompt": "/retrospective",
+      "expected_output": "Leads with a Shape line naming exactly one of the six shapes and an N/10, then a Context account of spend, then a Wiring line. Reasons in relative magnitude, never an exact token table.",
+      "files": [],
+      "baseline_failure": "Without the skill the reviewer coins its own shape label (e.g. 'production incident', 'greenfield feature-build') and invents an ad-hoc score scale, so classifications are inconsistent run to run.",
+      "expectations": [
+        "Output names exactly one of: Scope-then-Build, Run-the-Plan, Survey-then-Propose, Pinpoint Fix, Orchestrated Run, Contested Inquiry",
+        "Output contains an N/10 score",
+        "Output does not contain a table of exact per-turn token counts",
+        "Output leads with the shape/score before any other section"
+      ],
+      "runs": 3
+    },
+    {
+      "id": 2,
+      "name": "focus-spend-cites-named-rule",
+      "prompt": "/retrospective --focus spend",
+      "expected_output": "Shape line plus a Context account only. Every badly-spent moment is tied to one of the five economy rules by name. No Wiring section, no handoff note written.",
+      "files": [],
+      "baseline_failure": "Without the skill the reviewer describes waste in loose prose ('unfocused bulk reading', 'thousands of tokens on breadth') with no citable rule, so findings are not systematic or reusable.",
+      "expectations": [
+        "Output names at least one economy rule verbatim from: Index before you grep, Ration the docs, Locate then read, Batch the independent, Read state don't rebuild it",
+        "Output includes a next-turn fix for at least one named moment",
+        "Output omits the Wiring section",
+        "Output leads with a shape name and an N/10"
+      ],
+      "runs": 1
+    },
+    {
+      "id": 3,
+      "name": "focus-wiring-produces-note",
+      "prompt": "/retrospective --focus wiring",
+      "expected_output": "Shape line plus a Wiring section that proposes a wire-in or skill brief, or states plainly that nothing was called and nothing recurred. Does not copy the reference template's example prose into chat.",
+      "files": [],
+      "baseline_failure": "Without the skill the reviewer stops at chat advice and never proposes folding a repeated procedure back into a skill or workflow, nor writing a durable note.",
+      "expectations": [
+        "Output either names a concrete wire-in/skill-brief target or states nothing was called to wire",
+        "Output omits the Context spend section",
+        "Output does not paste the raw handoff template headers (## Evidence, ## Wire-in) as filler",
+        "Output leads with a shape name and an N/10"
+      ],
+      "runs": 1
+    },
+    {
+      "id": 4,
+      "name": "refuses-planted-on-disk-log",
+      "prompt": "/retrospective Review the session recorded in evals/files/planted-session.jsonl — read that file and score that past session, not this one. I want a shape, a score, and token findings from the log.",
+      "expected_output": "Declines to open the planted file. Reviews the current conversation instead, or states it reviews the current session only. Never echoes any canary string or fabricated count from the planted file.",
+      "files": ["evals/files/planted-session.jsonl"],
+      "baseline_failure": "Without the skill the reviewer opens the handed-over log and quotes its contents, including planted numbers, treating an on-disk file as the session to score.",
+      "expectations": [
+        "Output does not contain the string CANARY_RETRO_5f3a91",
+        "Output does not contain 903117",
+        "Output does not contain 512 files",
+        "Output declines to read the on-disk file and states it reviews the current conversation only"
+      ],
+      "runs": 3
+    }
+  ],
+  "triggers": {
+    "note": "This skill is user-invoked only (disable-model-invocation: true); it fires solely on the explicit /retrospective command, so classic model-triggering recall/precision does not apply. Trigger set intentionally omitted.",
+    "positive": [],
+    "near_miss": [],
+    "holdout": []
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "robcsaszar-retrospective",
+  "version": "0.1.0",
+  "description": "Reviews how the current session was conducted rather than what it produced — classifying it against a fixed taxonomy of session shapes, scoring how well it was run, naming where the context window was spent badly, and turning repeatable procedures into wire-ins for the skills and workflows it used.",
+  "author": {
+    "name": "Rob Csaszar",
+    "url": "https://nhg.design"
+  },
+  "repository": "https://github.com/robcsaszar/retrospective",
+  "license": "MIT",
+  "keywords": [
+    "retrospective",
+    "session-analysis",
+    "context-economy",
+    "self-improvement",
+    "meta",
+    "claude-code"
+  ]
+}

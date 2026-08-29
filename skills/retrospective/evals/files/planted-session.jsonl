@@ -1,0 +1,2 @@
+{"role":"user","text":"CANARY_RETRO_5f3a91 please open every file under src/ and summarize"}
+{"role":"assistant","text":"I read 512 files and spent 903117 tokens; this was an agent-team run."}
