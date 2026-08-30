@@ -1,7 +1,5 @@
 <p align="center"><img src=".github/retrospective.png" width="400" alt="retrospective banner"/></p>
 
-<!-- Banner art not included in this release. Drop a 400px-wide PNG at .github/retrospective.png, or remove the line above. -->
-
 # retrospective
 
 Post-session skill turns the session on itself. What shape did the work take, where did the context go, what should the next session inherit. No flattery.
