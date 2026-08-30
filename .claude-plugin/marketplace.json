@@ -8,7 +8,7 @@
     {
       "name": "robcsaszar-retrospective",
       "source": "./",
-      "description": "Reviews how the current session was conducted rather than what it produced — classifying it against a fixed taxonomy of session shapes, scoring how well it was run, naming where the context window was spent badly, and turning repeatable procedures into wire-ins for the skills and workflows it used.",
+      "description": "Reviews how a Claude Code session was conducted rather than what it shipped — classifies its shape, scores the run, flags where the context window went, and turns repeated hand-work into wire-ins for the skills the session used",
       "version": "0.1.0"
     }
   ]
