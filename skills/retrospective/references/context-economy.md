@@ -88,3 +88,9 @@ cross-subsystem investigation still earns its fan-out; these rules govern how
 each investigator spends its own context, not whether the breadth was justified.
 When the session was genuinely lean, say so and name the one rule it kept best —
 a clean session is a finding too, not an empty report.
+
+Nor do they cover the ground. If a moment was expensive because of the
+environment rather than the turn — the thing was hard to find for anyone, the
+tool has no cheap mode, the fact was unreachable — name the rule it resembles
+here, then hand it to the environment levers in the Wiring section, where the
+fix lives. Do not stretch a rule to cover a cost no turn could have avoided.

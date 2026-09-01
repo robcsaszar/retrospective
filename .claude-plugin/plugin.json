@@ -1,7 +1,7 @@
 {
   "name": "robcsaszar-retrospective",
-  "version": "0.1.0",
-  "description": "Reviews how a Claude Code session was conducted rather than what it shipped — classifies its shape, scores the run, flags where the context window went, and turns repeated hand-work into wire-ins for the skills the session used",
+  "version": "0.2.0",
+  "description": "Reviews how a Claude Code session was conducted rather than what it shipped — classifies its shape, scores the run, flags where the context window went, and turns recurring cost into wire-ins for the skills it used or a named lever on the environment that caused it",
   "author": {
     "name": "Rob Csaszar",
     "url": "https://nhg.design"

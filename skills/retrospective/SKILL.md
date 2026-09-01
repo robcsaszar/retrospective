@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: "Reviews how the current session was conducted — not what it produced. Classifies the session against a fixed taxonomy of shapes, scores how well it was run, names where the context window was spent badly with fixes actionable on the very next turn, and turns repeatable procedures it performed by hand into concrete wire-ins for the skills and workflows it actually used. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
+description: "Reviews how the current session was conducted — not what it produced. Classifies the session against a fixed taxonomy of shapes, scores how well it was run, names where the context window was spent badly with fixes actionable on the very next turn, turns repeatable procedures it performed by hand into concrete wire-ins for the skills and workflows it actually used, and names the environment lever (a navigation pointer, an automated check, a review-stage rule) that would stop a recurring cost at its source. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
 disable-model-invocation: true
 argument-hint: "[--focus spend|wiring]"
 ---
@@ -69,13 +69,30 @@ finding, not an empty report.
 
 ## Step 3 — Wire it back
 
-Skip this step under `--focus spend`. Otherwise, for each skill or workflow the
-session called, ask whether a repeatable step you
-performed *around* it by hand should be folded in so it is automatic next time.
-For a repeatable procedure that no existing artifact covers, consider a new
-skill — but prefer extending a called artifact over inventing a parallel one.
-Cap new-skill candidates at three. If nothing was called and nothing recurred,
-say so plainly.
+Skip this step under `--focus spend`. Otherwise, **MANDATORY READ**
+[`references/environment-levers.md`](references/environment-levers.md); cite
+its levers by name.
+
+Two questions, asked in this order:
+
+1. **Was it the turn or the ground?** For each badly-spent moment from Step 2
+   (or, under `--focus wiring`, each moment you would have named), decide
+   whether a more careful turn would have avoided it, or whether the
+   environment made it expensive for anyone — a thing hard to find, a mistake
+   no check catches, a tool that is verbose by design, a fact the session could
+   not reach. Ground-side costs get a lever, named from the reference, with the
+   real file it lands in. Order lever candidates by severity; cap at three.
+2. **What was done by hand around a called artifact?** For each skill or
+   workflow the session called, ask whether a repeatable step you performed
+   *around* it should be folded in so it is automatic next time. For a
+   repeatable procedure that no existing artifact covers, consider a new skill
+   — but prefer extending a called artifact over inventing a parallel one. Cap
+   new-skill candidates at three.
+
+A recurring cost usually wants a lever before it wants a skill edit: a check
+costs no context and cannot be skimmed, a rule enforced at review does not
+compete with the work, and a pointer beats a paragraph. If nothing was called,
+nothing recurred, and no lever applies, say so plainly.
 
 ## Step 4 — Write the notes
 
@@ -97,8 +114,9 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
   next-turn fix; or "lean" and the one rule that kept it so. (Omit under
   `--focus wiring`.)
 - **Wiring** — the paths to any notes written, one line per recommendation
-  (target or slug plus the change), or "nothing called, nothing to wire". (Omit
-  under `--focus spend`.)
+  (target or slug plus the change; for a lever, its name and the file it lands
+  in), most severe first; or "nothing called, nothing to wire". (Omit under
+  `--focus spend`.)
 
 ## Rules
 
@@ -106,6 +124,8 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
   six names do not quite fit.
 - Be concise — the account is the product, not a transcript of it; a
   retrospective that costs what it audits has failed its own test.
+- Blame the ground before the turn when a cost would recur for anyone — a
+  named lever is a fix; "be more careful" is not.
 
 ## NEVER
 
@@ -125,4 +145,5 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
 
 - `references/shapes.md` — only in Step 1.
 - `references/context-economy.md` — only in Step 2.
+- `references/environment-levers.md` — only in Step 3 (skip under `--focus spend`).
 - `references/handoff-contract.md` — only in Step 4 (skip under `--focus spend`).
