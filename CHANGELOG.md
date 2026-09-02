@@ -14,6 +14,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 - Context-economy reference now routes ground-side costs (verbose-by-design tools, unreachable facts, hard-to-find files) to the levers rather than stretching a turn-side rule over them.
 - Wiring output lists recommendations most severe first.
 - Description names the lever concept so the router can tell this skill proposes environment fixes, not only skill edits.
+- Eval suite moved from `skills/retrospective/evals/` to `evals/retrospective/` so the skill directory holds only `SKILL.md` and `references/`, per the Agent Skills spec.
 
 ## [0.1.0] - 2026-08-29
 

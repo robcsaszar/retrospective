@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: "Reviews how the current session was conducted — not what it produced. Classifies the session against a fixed taxonomy of shapes, scores how well it was run, names where the context window was spent badly with fixes actionable on the very next turn, turns repeatable procedures it performed by hand into concrete wire-ins for the skills and workflows it actually used, and names the environment lever (a navigation pointer, an automated check, a review-stage rule) that would stop a recurring cost at its source. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
+description: "Reviews how the current session was conducted — not what it produced. Produces a session shape and score, an account of where the context window was spent badly with next-turn fixes, and wire-ins, environment levers, or skill briefs written as best-effort handoff notes to disk. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
 disable-model-invocation: true
 argument-hint: "[--focus spend|wiring]"
 ---
@@ -76,12 +76,15 @@ its levers by name.
 Two questions, asked in this order:
 
 1. **Was it the turn or the ground?** For each badly-spent moment from Step 2
-   (or, under `--focus wiring`, each moment you would have named), decide
-   whether a more careful turn would have avoided it, or whether the
-   environment made it expensive for anyone — a thing hard to find, a mistake
-   no check catches, a tool that is verbose by design, a fact the session could
-   not reach. Ground-side costs get a lever, named from the reference, with the
-   real file it lands in. Order lever candidates by severity; cap at three.
+   (or, under `--focus wiring`, each moment you would have named), apply one
+   test: would the cost recur for a different agent taking a careful turn? If
+   not, it was the turn — it gets its next-turn fix under the economy rule and
+   no lever. If so, it was the ground — a thing hard to find, a mistake no
+   check catches, a tool that is verbose by design, a fact the session could
+   not reach — and it gets a lever, named from the reference, with the real
+   file it lands in. No signal, no lever: each lever must match its use-when
+   signal in the reference to a moment in this session. Order lever candidates
+   by severity; cap at three.
 2. **What was done by hand around a called artifact?** For each skill or
    workflow the session called, ask whether a repeatable step you performed
    *around* it should be folded in so it is automatic next time. For a
@@ -114,18 +117,18 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
   next-turn fix; or "lean" and the one rule that kept it so. (Omit under
   `--focus wiring`.)
 - **Wiring** — the paths to any notes written, one line per recommendation
-  (target or slug plus the change; for a lever, its name and the file it lands
-  in), most severe first; or "nothing called, nothing to wire". (Omit under
-  `--focus spend`.)
+  (target or slug plus the change; for a lever, its name, the file it lands
+  in, and the moment it fixes), most severe first; or "nothing called, nothing
+  to wire". (Omit under `--focus spend`.)
 
 ## Rules
 
 - One shape by its closest fit — never coin a label to flatter a session the
   six names do not quite fit.
-- Be concise — the account is the product, not a transcript of it; a
-  retrospective that costs what it audits has failed its own test.
-- Blame the ground before the turn when a cost would recur for anyone — a
-  named lever is a fix; "be more careful" is not.
+- The account is the product, not a transcript of it — a retrospective that
+  costs what it audits has failed its own test.
+- When the test says ground, name a lever — "be more careful" is not a fix;
+  when it says turn, name the next-turn action and no lever.
 
 ## NEVER
 
@@ -140,6 +143,10 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
 - **NEVER block on a denied read, list, or write**
   **Instead:** Treat it as unavailable once, proceed from what you hold, and give the note inline.
   **Why:** The graded output is the reply, not the side files; a retry spends the context the skill exists to protect.
+
+- **NEVER name a lever for a cost the turn could have avoided**
+  **Instead:** Give the next-turn fix under its economy rule and leave the Wiring section lever-free for that moment.
+  **Why:** A lever changes what every future session loads or runs; one raised without evidence taxes all of them for one turn's mistake.
 
 ## Do NOT Load
 
