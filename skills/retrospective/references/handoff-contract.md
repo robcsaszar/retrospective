@@ -26,13 +26,17 @@ fits.
 Keep it short — roughly half a page. It must name a **real** target: the file
 that actually runs. When the called skill is a thin launcher for a workflow
 script, name the script, not the launcher — editing the launcher ships nothing.
-For a plain skill, the SKILL.md prose is what runs.
+For a plain skill, the SKILL.md prose is what runs. For an environment lever,
+the target is the file the lever lands in — the entry steering file, the lint
+or test config, the review-stage standards file, the tool wrapper — never a
+skill that merely mentions it.
 
 ```markdown
 # Wire-in: <target skill / workflow>
 
 ## Target
-- file: <path to the file that actually runs>
+- file: <path to the file that actually runs, or that the lever lands in>
+- lever: <skill step | navigation pointer | automated check | review-stage rule | steering trim | tool verbosity | information access>
 - source: current session
 - created: <ISO-8601>
 
@@ -47,7 +51,8 @@ For a plain skill, the SKILL.md prose is what runs.
 <!-- The token or quality win next time, in relative terms. -->
 
 ## Blast radius
-<!-- Who else calls this artifact; what could regress. -->
+<!-- Who else calls this artifact or loads this file; what could regress. For a
+     steering-file change, what every future session now pays or stops paying. -->
 ```
 
 ---
