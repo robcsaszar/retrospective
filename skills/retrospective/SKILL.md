@@ -76,8 +76,9 @@ its levers by name.
 Two questions, asked in this order:
 
 1. **Was it the turn or the ground?** For each badly-spent moment from Step 2
-   (or, under `--focus wiring`, each moment you would have named), apply one
-   test: would the cost recur for a different agent taking a careful turn? If
+   (or, under `--focus wiring`, each moment you would have named — identify
+   them, but do not report them), apply one test: would the cost recur for a
+   different agent taking a careful turn? If
    not, it was the turn — it gets its next-turn fix under the economy rule and
    no lever. If so, it was the ground — a thing hard to find, a mistake no
    check catches, a tool that is verbose by design, a fact the session could
@@ -127,8 +128,6 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
   six names do not quite fit.
 - The account is the product, not a transcript of it — a retrospective that
   costs what it audits has failed its own test.
-- When the test says ground, name a lever — "be more careful" is not a fix;
-  when it says turn, name the next-turn action and no lever.
 
 ## NEVER
 
