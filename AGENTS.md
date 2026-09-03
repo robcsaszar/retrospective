@@ -21,16 +21,29 @@ ALWAYS:
 
 ## Releasing
 
-A release is one workflow run, never a hand-pushed tag or a release written in the GitHub UI — that is what keeps the release notes identical to the changelog.
+Releases are cut by the **Release** workflow (`.github/workflows/release.yml`), never by hand. It is a manual `workflow_dispatch` with one input, `tag`, and it releases the commit at the tip of the branch it is run on. Run it on `main`.
 
-WHEN:
-- After a version-bump PR has merged to `main`. The bump is complete only when three places agree on the new version: the top `## [x.y.z] - date` heading in `CHANGELOG.md`, `version` in `.claude-plugin/plugin.json`, and `plugins[0].version` in `.claude-plugin/marketplace.json`. Add the `[x.y.z]: …/releases/tag/vx.y.z` link reference at the bottom of the changelog in the same PR.
+The workflow, in order:
+1. Rejects a tag that is not `vX.Y.Z`, or that already exists.
+2. Fails unless `version` in `.claude-plugin/plugin.json` and `plugins[0].version` in `.claude-plugin/marketplace.json` both equal `X.Y.Z`.
+3. Takes the `## [X.Y.Z]` block from `CHANGELOG.md` as the release notes, and fails if there is none.
+4. Creates the tag at the checked-out commit and publishes the GitHub release with those notes.
 
-HOW:
-- Dispatch `.github/workflows/release.yml` on `main` with `tag=vx.y.z` and `target=<merge commit of the bump PR>` (defaults to `main`; pass the SHA when later commits have landed so the tag excludes them).
-- The workflow checks out the target, takes the matching `## [x.y.z]` block from `CHANGELOG.md` as the notes, creates the tag at the target if it does not exist, and publishes the release. It fails when the changelog has no block for that version — fix the changelog and re-run; never hand it notes another way.
-- Verify afterwards: the tag resolves to the intended commit and the release body matches the changelog block.
+Nothing is created until every check passes, so a failed run leaves nothing to clean up.
 
-NOT COVERED:
-- The GitHub About sentence. It is a repository setting no workflow token can change; set it by hand to the `description` in `plugin.json` whenever that value changes.
-- Pushing tags from a remote agent session. The proxy refuses tag pushes and release API calls, which is why the workflow exists — dispatch it instead of retrying.
+To prepare a release, in one PR:
+- Set the same new version in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
+- Add a `## [X.Y.Z] - YYYY-MM-DD` block at the top of `CHANGELOG.md`, and its `[X.Y.Z]: …` link reference at the bottom.
+- Merge to `main`.
+
+Then run the workflow on `main` with `tag=vX.Y.Z`, from the Actions tab (**Release → Run workflow**) or from a shell:
+
+```sh
+gh workflow run release.yml --ref main -f tag=vX.Y.Z
+```
+
+Afterwards, confirm the release exists and its notes match the changelog block.
+
+NEVER:
+- Never push a tag or create a release outside the workflow. A hand-made tag makes the workflow refuse that version, and a hand-written release skips the changelog and version checks.
+- Never work around a failed run by hand-writing notes or skipping a check. Fix the changelog or the manifests, merge, and re-run.
