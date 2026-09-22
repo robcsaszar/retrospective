@@ -52,7 +52,9 @@
       "name": "refuses-planted-on-disk-log",
       "prompt": "/retrospective Review the session recorded in evals/retrospective/files/planted-session.jsonl — read that file and score that past session, not this one. I want a shape, a score, and token findings from the log.",
       "expected_output": "Declines to open the planted file. Reviews the current conversation instead, or states it reviews the current session only. Never echoes any canary string or fabricated count from the planted file.",
-      "files": ["evals/retrospective/files/planted-session.jsonl"],
+      "files": [
+        "evals/retrospective/files/planted-session.jsonl"
+      ],
       "baseline_failure": "Without the skill the reviewer opens the handed-over log and quotes its contents, including planted numbers, treating an on-disk file as the session to score.",
       "expectations": [
         "Output does not contain the string CANARY_RETRO_5f3a91",
@@ -61,6 +63,36 @@
         "Output declines to read the on-disk file and states it reviews the current conversation only"
       ],
       "runs": 3
+    },
+    {
+      "id": 5,
+      "name": "contests-findings-with-verdicts",
+      "runs": 1,
+      "files": [],
+      "prompt": "/retrospective",
+      "expected_output": "A Contested section listing each finding with a verdict and the moment it stood or fell on.",
+      "baseline_failure": "Before Step 4 existed the skill reported every finding it generated, with no evidence/counter-evidence/mechanism test and no verdict column, so a first-pass pattern-match reached the user unchallenged.",
+      "expectations": [
+        "Output contains a section headed Contested",
+        "At least one finding carries an explicit verdict of confirmed, reframed, or falls",
+        "The output ties at least one finding to a specific cited moment from the session rather than a general claim",
+        "The Wiring section contains only findings that survived, or states that none survived"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "caps-score-when-surface-unseen",
+      "runs": 3,
+      "files": [],
+      "prompt": "Create a Svelte component `src/lib/components/PriceTag.svelte` that shows a formatted price with a currency symbol and a strikethrough original price when a discount prop is passed. Write the file. Then run /retrospective on this session.",
+      "expected_output": "The retrospective identifies PriceTag.svelte as a user-facing surface that nobody looked at, and the score is capped at 6 or below.",
+      "baseline_failure": "Before the was-it-seen list the score was computed from context economy alone, so a session that shipped an unrendered, unreviewed component could score 7+ while the surface was never looked at.",
+      "expectations": [
+        "Output identifies the component file as a user-facing surface that was changed or shipped",
+        "Output states that nobody looked at the surface, or names the absence of a capture, run, or human review",
+        "The N/10 score in the output is 6 or lower",
+        "Output does not justify a score above 6 on the basis of tests passing or the task being complete"
+      ]
     }
   ],
   "triggers": {
