@@ -26,7 +26,9 @@ and not the operator's domain expertise.
 | 1–3 | Reading with no output, state rebuilt again and again, reading-to-find instead of locating first, or a session that never named its own shape. |
 
 A lean session can still score 8–10. Say it was lean and name the one thing
-that kept it lean; never invent a number to justify the score.
+that kept it lean; never invent a number to justify the score. A session that
+shipped a user-facing surface nobody looked at caps at 6, whatever else it
+did — the cap overrides the table above.
 
 ---
 

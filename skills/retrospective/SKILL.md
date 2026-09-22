@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: "Reviews how the current session was conducted — not what it produced. Produces a session shape and score, an account of where the context window was spent badly with next-turn fixes, and wire-ins, environment levers, or skill briefs written as best-effort handoff notes to disk. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
+description: "Reviews how the current session was conducted — not what it produced. Produces a session shape and score, an account of where the context window was spent badly with next-turn fixes, each finding contested against evidence, counter-evidence and mechanism before it is reported, and wire-ins, environment levers, or skill briefs written as best-effort handoff notes to disk. Reads only the conversation already in context — no transcript file, no log. User-invoked with /retrospective, optionally --focus spend or --focus wiring. Don't use for interrogating what shipped (that is socratic) or planning work not yet done (that is meridian)."
 disable-model-invocation: true
 argument-hint: "[--focus spend|wiring]"
 ---
@@ -32,9 +32,9 @@ tool-call tally. Two things follow, and they are the spine of this skill:
 
 | Arg | Meaning |
 |-----|---------|
-| _(none)_ | Full retrospective — Shape, Context, and Wiring. |
+| _(none)_ | Full retrospective — Shape, Context, Contested, and Wiring. |
 | `--focus spend` | Shape line plus the Context account only; omit Wiring. |
-| `--focus wiring` | Shape line plus the Wiring section only; omit Context. |
+| `--focus wiring` | Shape line, the Contested table, and Wiring; omit Context. |
 
 ## Step 1 — Take the session's shape
 
@@ -53,6 +53,12 @@ Then, from the conversation you hold, note the rough tool mix (reads, edits,
 searches, shell, subagents, skills, workflows) and the artifacts the session
 invoked — every skill and workflow it called, in order. That list drives Step 3.
 
+**Was it seen?** Before the score is final, list every user-facing surface the
+session changed or shipped — a page, component or layout a person looks at, a
+document a person reads; not an API, a migration or a pure function — and who
+looked at it, how: a capture, a run, a person, or nobody. A surface nobody
+looked at is a finding whatever the tests said, and the key's cap applies.
+
 ## Step 2 — Account for the context
 
 Skip this step under `--focus wiring`. Otherwise, **MANDATORY READ**
@@ -63,7 +69,9 @@ Name the concrete moments where the context window was spent badly. For each:
 the moment and where it happened; the economy rule it broke, by name (Index
 before you grep, Ration the docs, Locate then read, Batch the independent, Read
 state don't rebuild it); the specific different action next turn; and the
-magnitude in relative terms, never a fabricated count. If the session was
+magnitude in relative terms — except where the session's own tool output
+printed a number (a suite runtime, a `git log` count, full-suite runs you can
+tally from your own calls): cite that, with its source. If the session was
 already lean, say so and name the one rule it kept best — a clean session is a
 finding, not an empty report.
 
@@ -93,12 +101,32 @@ Two questions, asked in this order:
    — but prefer extending a called artifact over inventing a parallel one. Cap
    new-skill candidates at three.
 
+An unseen surface from Step 1 gets its lever here: the gate of the artifact
+that shipped it, never a note.
+
 A recurring cost usually wants a lever before it wants a skill edit: a check
 costs no context and cannot be skimmed, a rule enforced at review does not
 compete with the work, and a pointer beats a paragraph. If nothing was called,
 nothing recurred, and no lever applies, say so plainly.
 
-## Step 4 — Write the notes
+## Step 4 — Contest the findings
+
+Skip this step under `--focus spend`. Otherwise, **MANDATORY READ**
+[`references/contest.md`](references/contest.md).
+
+Every finding from Steps 2 and 3 — and every item on a lesson list the user
+asks for — is a hypothesis until it passes three tests: **evidence** (cite the
+moment; none → it falls), **counter-evidence** (find the moment that
+contradicts it; a rule founded on fewer than three moments is a hunch, not a
+finding), **mechanism** (would the fix have changed the cited moment, and does
+it conflict with a sibling skill's rule — name the line). Check each finding
+against the memory index — `references/contest.md` § Memory as evidence — and
+never write memory from here.
+
+Verdict per finding: confirmed, reframed (state the new form), or falls
+(state which test). Only survivors reach Step 5 and the Wiring section.
+
+## Step 5 — Write the notes
 
 **MANDATORY READ** [`references/handoff-contract.md`](references/handoff-contract.md)
 for the wire-in and skill-brief formats and where they go.
@@ -106,7 +134,8 @@ for the wire-in and skill-brief formats and where they go.
 Attempt the write **once**, best-effort. If the directory or write is denied,
 give the wire-in as a short inline bullet instead and say the write was
 unavailable — never retry, never guess another path, never paste the raw
-template into chat. Skip this step under `--focus spend`.
+template into chat. Skip this step under
+`--focus spend`.
 
 ## Output
 
@@ -117,7 +146,11 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
 - **Context** — the badly-spent moments, each tied to a named rule with its
   next-turn fix; or "lean" and the one rule that kept it so. (Omit under
   `--focus wiring`.)
-- **Wiring** — the paths to any notes written, one line per recommendation
+- **Contested** — one table, most severe first: finding · verdict · the
+  moment it stood or fell on; each unseen surface from Step 3 is a row with
+  verdict *unseen* and the moment it shipped — when the session changed no
+  surface, one line says so. (Omit under `--focus spend`.)
+- **Wiring** — survivors only: the paths to any notes written, one line per recommendation
   (target or slug plus the change; for a lever, its name, the file it lands
   in, and the moment it fixes), most severe first; or "nothing called, nothing
   to wire". (Omit under `--focus spend`.)
@@ -143,6 +176,14 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
   **Instead:** Treat it as unavailable once, proceed from what you hold, and give the note inline.
   **Why:** The graded output is the reply, not the side files; a retry spends the context the skill exists to protect.
 
+- **NEVER report a lesson that survived no test**
+  **Instead:** Step 4 — a finding is a hypothesis until a cited moment, a search for its contradiction, and a traced mechanism hold.
+  **Why:** A retrospective's first pass is pattern-matching on recency; one first pass here was two-of-seven wrong and missed the strongest item.
+
+- **NEVER score a session that shipped an unseen surface above 6**
+  **Instead:** Step 1's was-it-seen list runs before the score; the key's cap applies.
+  **Why:** One Orchestrated Run scored 7/10 on context economy alone and came back with nine defects from a single play — a score that cannot see the output measures the wrong thing.
+
 - **NEVER name a lever for a cost the turn could have avoided**
   **Instead:** Give the next-turn fix under its economy rule and leave the Wiring section lever-free for that moment.
   **Why:** A lever changes what every future session loads or runs; one raised without evidence taxes all of them for one turn's mistake.
@@ -152,4 +193,5 @@ Lead every reply with the Shape line — shape and N/10 — whatever the focus.
 - `references/shapes.md` — only in Step 1.
 - `references/context-economy.md` — only in Step 2.
 - `references/environment-levers.md` — only in Step 3 (skip under `--focus spend`).
-- `references/handoff-contract.md` — only in Step 4 (skip under `--focus spend`).
+- `references/contest.md` — only in Step 4 (skip under `--focus spend`).
+- `references/handoff-contract.md` — only in Step 5 (skip under `--focus spend`).
